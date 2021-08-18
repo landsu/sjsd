@@ -12,34 +12,59 @@ def get_content(path):
 
 
 def htmlFormat(book):
-    fmt_1a = ''
-    fmt_1b = ''
-    return book
+    textncode = ''
+    swt = True
+    for line in book:
+        line = line.replace('\n', '')
+        if re.search(r'^.[0-9].*?', line):
+            if swt:
+                line = '<p class="c"><a href="../index.html">' + \
+                    line + '</a></p>' + '\n<hr />\n'
+                textncode += line
+                swt = False
+            else:
+                line = '<hr />\n<p class="c"><a href="../index.html">' + \
+                    line + '</a></p>' + '\n<hr />\n'
+                textncode += line
+        elif len(line) <= 1:
+            pass
+        else:
+            line = '<p>' + line + '</p>\n'
+            textncode += line
+    return textncode
 
 
-def save(book):
+def save(book, i):
 
     # book 格式化
-    book = htmlFormat(book)
+    textncode = htmlFormat(book)
     # 与模板合并
+    textncode = muban.header + textncode + muban.footer
     # 存储规则
-    pass
+    path = 'F:\\dvlp\\bibleshudu\\books\\' + str(i) + '.html'
+
+    with open(path, 'w', encoding='utf-8') as f:
+        f.write(textncode)
+
+    exit()
 
 
 def splitText(text):
 
-    book = ''
+    book = []
+    i = 1
     for line in text:
-        if not re.search(r'', line):
-            book += line
+        if not re.search(r'[0-9]. ', line):
+            book.append(line)
         else:
-            save(book)
-            book = ''
+            save(book, i)
+            i += 1
+            book = []
 
 
 def main():
     # 定义项
-    path = 'D:\\dev\\bible_sudu\\data.txt'
+    path = 'F:\\dvlp\\bibleshudu\\data.txt'
 
     # 获取文本存入列表
     text = get_content(path)
