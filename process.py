@@ -41,12 +41,13 @@ def save(book, i):
     # 与模板合并
     textncode = muban.header + textncode + muban.footer
     # 存储规则
-    path = 'F:\\dvlp\\bibleshudu\\books\\' + str(i) + '.html'
+    path = root + 'books\\' + str(i) + '.html'
 
     with open(path, 'w', encoding='utf-8') as f:
         f.write(textncode)
 
-    exit()
+    if i == 2:
+        exit()
 
 
 def splitText(text):
@@ -62,9 +63,18 @@ def splitText(text):
             book = []
 
 
+sw = 0
+
+if sw == 0:
+    root = 'D:\\dev\\bible_sudu\\'
+else:
+    root = 'F:\\dvlp\\bibleshudu\\'
+
+
 def main():
     # 定义项
-    path = 'F:\\dvlp\\bibleshudu\\data.txt'
+
+    path = root + 'data.txt'
 
     # 获取文本存入列表
     text = get_content(path)
