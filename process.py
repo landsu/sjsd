@@ -16,7 +16,7 @@ def htmlFormat(book):
     swt = True
     for line in book:
         line = line.replace('\n', '')
-        if re.search(r'^.[0-9].*?', line):
+        if re.search(r'[0-9]', line):
             if swt:
                 line = '<p class="c"><a href="../index.html">' + \
                     line + '</a></p>' + '\n<hr />\n'
@@ -46,8 +46,8 @@ def save(book, i):
     with open(path, 'w', encoding='utf-8') as f:
         f.write(textncode)
 
-    if i == 2:
-        exit()
+    # if i == 10:
+    #     exit()
 
 
 def splitText(text):
